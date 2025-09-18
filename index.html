@@ -1,14 +1,15 @@
 ﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#1e2a38">
     <meta name="description" content="أداة بومودورو عربية لزيادة الإنتاجية والتركيز">
     <title>سومر - أداة البومودورو العربية</title>
-    <!-- الفافيكون -->
+
+    <!-- فافيكون (لوغو الموقع) -->
     <link rel="icon" type="image/png" href="https://iili.io/KREI5cF.md.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -157,6 +158,9 @@
             color: var(--color-text);
             transition: all 0.3s;
             box-shadow: var(--shadow-sm);
+            position: absolute;
+            left: 20px;
+            top: 20px;
         }
 
         .theme-toggle:hover {
@@ -668,6 +672,13 @@
             .card {
                 padding: var(--space-lg);
             }
+            
+            .theme-toggle {
+                position: relative;
+                left: 0;
+                top: 0;
+                margin-bottom: var(--space-md);
+            }
         }
 
         /* تأثيرات النقر */
@@ -706,26 +717,16 @@
     </style>
 </head>
 <body class="dark-mode">
+    <!-- زر تبديل الوضع الليلي/النهاري في أعلى يسار الصفحة -->
+    <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-sun"></i>
+    </button>
+
     <!-- شريط التنقل العلوي -->
     <nav class="navbar">
         <div class="navbar-brand">
             <img src="https://iili.io/KREI5cF.md.png" alt="شعار سومر" class="navbar-logo">
             <div class="navbar-title">سومر</div>
-       <div class="navbar-nav">
-    <!-- رابط الرئيسية -->
-    <a href="index.html" class="nav-link">الرئيسية</a>
-
-    <!-- رابط يفتح صفحة داخلية -->
-    <a href="about.html" class="nav-link">هذا الموقع</a>
-
-    <!-- رابط يفتح موقعك الآخر -->
-    <a href="https://a07725684792-source.github.io/somer.lr/#" target="_blank" class="nav-link">الموقع الآخر</a>
-</div>
-
-        <div class="navbar-actions">
-            <button class="theme-toggle" id="themeToggle">
-                <i class="fas fa-sun"></i>
-            </button>
         </div>
     </nav>
 
@@ -934,7 +935,7 @@
         </div>
         
         <footer>
-            <p>© 2023 سومر - أداة البومودورو العربية لزيادة الإنتاجية</p>
+            <p>إنتاج شركة سومر</p>
         </footer>
     </div>
 
