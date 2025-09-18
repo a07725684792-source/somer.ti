@@ -1,0 +1,1500 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1e2a38">
+    <meta name="description" content="أداة بومودورو عربية لزيادة الإنتاجية والتركيز">
+    <title>سومر - أداة البومودورو العربية</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* متغيرات التصميم الموحدة */
+        :root {
+            /* الألوان الرئيسية */
+            --color-primary-dark: #1e2a38;
+            --color-primary-light: #2a3a4d;
+            --color-accent: #4fd1c5;
+            --color-white: #ffffff;
+            --color-text: #e2e8f0;
+            --color-text-secondary: #a0aec0;
+            --color-border: #2d3748;
+            --color-background: #1e2a38;
+            
+            /* تأثيرات الظل */
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15), 0 5px 10px rgba(0, 0, 0, 0.05);
+            
+            /* أنماط الزوايا */
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            
+            /* مسافات */
+            --space-xs: 0.25rem;
+            --space-sm: 0.5rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-2xl: 3rem;
+        }
+
+        /* أنماط الخطوط */
+        * {
+            font-family: 'Tajawal', 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--color-background);
+            color: var(--color-text);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+            overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* شريط التنقل العلوي */
+        .navbar {
+            background-color: var(--color-primary-dark);
+            padding: var(--space-md) var(--space-xl);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--color-border);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .navbar-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: var(--shadow-lg);
+            border: 3px solid var(--color-accent);
+            transition: border-color 0.3s;
+        }
+
+        .navbar-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--color-white);
+            transition: color 0.3s;
+        }
+
+        .navbar-nav {
+            display: flex;
+            gap: var(--space-xl);
+        }
+
+        .nav-link {
+            color: var(--color-text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+            padding: var(--space-sm) 0;
+        }
+
+        .nav-link:hover {
+            color: var(--color-accent);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--color-accent);
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .navbar-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        /* زر تبديل الوضع الليلي */
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--color-primary-light);
+            color: var(--color-text);
+            transition: all 0.3s;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--color-accent);
+            color: var(--color-primary-dark);
+            transform: rotate(15deg);
+        }
+
+        /* المحتوى الرئيسي */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--space-xl);
+        }
+
+        /* أزرار التنقل بين الصفحات */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: var(--space-2xl);
+            gap: var(--space-md);
+            flex-wrap: wrap;
+        }
+
+        .nav-tab {
+            padding: var(--space-md) var(--space-lg);
+            border: none;
+            border-radius: var(--radius-lg);
+            background-color: var(--color-primary-light);
+            color: var(--color-text);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 1rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-tab.active {
+            background-color: var(--color-accent);
+            color: var(--color-primary-dark);
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-tab:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* الصفحات */
+        .page {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .page.active {
+            display: block;
+            opacity: 1;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* البطاقات */
+        .card {
+            background-color: var(--color-primary-light);
+            border-radius: var(--radius-xl);
+            padding: var(--space-xl);
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--space-xl);
+            transition: all 0.3s ease;
+            border: 1px solid var(--color-border);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* المؤقت */
+        .timer-display {
+            font-size: 5rem;
+            font-weight: bold;
+            font-variant-numeric: tabular-nums;
+            color: var(--color-accent);
+            margin: var(--space-xl) 0;
+            text-shadow: 0 0 15px rgba(79, 209, 197, 0.5);
+            text-align: center;
+            transition: color 0.3s;
+        }
+
+        .timer-progress {
+            width: 100%;
+            height: 12px;
+            background-color: var(--color-border);
+            border-radius: var(--radius-lg);
+            margin: var(--space-xl) 0;
+            overflow: hidden;
+        }
+
+        .timer-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-accent), #2dd4bf);
+            width: 0%;
+            transition: width 1s linear;
+            border-radius: var(--radius-lg);
+        }
+
+        .timer-controls {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+            flex-wrap: wrap;
+        }
+
+        /* الأزرار العامة */
+        .btn {
+            padding: var(--space-md) var(--space-lg);
+            border: none;
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary {
+            background-color: var(--color-accent);
+            color: var(--color-primary-dark);
+        }
+
+        .btn-primary:hover {
+            background-color: #38b2ac;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background-color: var(--color-primary-light);
+            color: var(--color-text);
+            border: 1px solid var(--color-border);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--color-border);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .timer-modes {
+            display: flex;
+            justify-content: center;
+            margin-bottom: var(--space-xl);
+            gap: var(--space-md);
+            flex-wrap: wrap;
+        }
+
+        .timer-mode {
+            padding: var(--space-md) var(--space-lg);
+            border: none;
+            border-radius: var(--radius-lg);
+            background-color: var(--color-primary-light);
+            color: var(--color-text);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 1rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .timer-mode.active {
+            background-color: var(--color-accent);
+            color: var(--color-primary-dark);
+            box-shadow: var(--shadow-md);
+        }
+
+        .timer-mode:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .quote-container {
+            margin: var(--space-xl) 0;
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            background-color: var(--color-primary-light);
+            font-style: italic;
+            text-align: center;
+            transition: opacity 0.5s ease;
+            font-size: 1.2rem;
+            border: 1px solid var(--color-border);
+        }
+
+        /* الإحصائيات */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-lg);
+            margin-top: var(--space-xl);
+        }
+
+        .stat-card {
+            background-color: var(--color-primary-light);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            text-align: center;
+            transition: transform 0.3s;
+            border: 1px solid var(--color-border);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--color-accent);
+            margin-bottom: var(--space-sm);
+            transition: color 0.3s;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--color-text-secondary);
+            transition: color 0.3s;
+        }
+
+        /* عناصر الإعدادات */
+        .settings-title {
+            font-size: 1.5rem;
+            margin-bottom: var(--space-lg);
+            color: var(--color-white);
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            transition: color 0.3s;
+        }
+
+        .setting-item {
+            margin-bottom: var(--space-lg);
+        }
+
+        .setting-label {
+            display: block;
+            margin-bottom: var(--space-sm);
+            font-weight: 600;
+            color: var(--color-text);
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        .setting-input {
+            width: 100%;
+            padding: var(--space-md);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            background-color: var(--color-primary-dark);
+            color: var(--color-text);
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .setting-input:focus {
+            outline: none;
+            border-color: var(--color-accent);
+            box-shadow: 0 0 0 3px rgba(79, 209, 197, 0.2);
+        }
+
+        /* المهام */
+        .todo-container {
+            margin-top: var(--space-xl);
+        }
+
+        .todo-form {
+            display: flex;
+            margin-bottom: var(--space-lg);
+        }
+
+        .todo-input {
+            flex: 1;
+            padding: var(--space-md);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md) 0 0 var(--radius-md);
+            background-color: var(--color-primary-dark);
+            color: var(--color-text);
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .todo-input:focus {
+            outline: none;
+            border-color: var(--color-accent);
+        }
+
+        .todo-add {
+            padding: var(--space-md) var(--space-lg);
+            border: none;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            background-color: var(--color-accent);
+            color: var(--color-primary-dark);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .todo-add:hover {
+            background-color: #38b2ac;
+        }
+
+        .todo-list {
+            list-style: none;
+        }
+
+        .todo-item {
+            display: flex;
+            align-items: center;
+            padding: var(--space-md);
+            border-bottom: 1px solid var(--color-border);
+            transition: all 0.3s;
+        }
+
+        .todo-item:hover {
+            background-color: var(--color-primary-dark);
+            border-radius: var(--radius-md);
+        }
+
+        .todo-checkbox {
+            margin-left: var(--space-md);
+            width: 20px;
+            height: 20px;
+            accent-color: var(--color-accent);
+        }
+
+        .todo-text {
+            flex: 1;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+        }
+
+        .todo-text.completed {
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        .todo-delete {
+            background: none;
+            border: none;
+            color: #fc8181;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+
+        .todo-delete:hover {
+            transform: scale(1.2);
+        }
+
+        /* الشارات */
+        .badges-container {
+            margin-top: var(--space-xl);
+        }
+
+        .badges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: var(--space-lg);
+            margin-top: var(--space-lg);
+        }
+
+        .badge {
+            background-color: var(--color-primary-light);
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid var(--color-border);
+        }
+
+        .badge:hover {
+            transform: scale(1.1) rotate(5deg);
+            border-color: var(--color-accent);
+        }
+
+        .badge.locked {
+            filter: grayscale(1);
+            opacity: 0.5;
+        }
+
+        .badge-tooltip {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--color-primary-dark);
+            color: var(--color-text);
+            padding: var(--space-sm) var(--space-md);
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s;
+            border: 1px solid var(--color-border);
+        }
+
+        .badge:hover .badge-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* الأصوات */
+        .sound-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-md);
+            margin-top: var(--space-md);
+        }
+
+        .sound-btn {
+            padding: var(--space-sm) var(--space-md);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            background-color: var(--color-primary-light);
+            color: var(--color-text);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .sound-btn.active {
+            background-color: var(--color-accent);
+            color: var(--color-primary-dark);
+            border-color: var(--color-accent);
+        }
+
+        .sound-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* التحدي */
+        .challenge-buttons {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-md);
+            margin-top: var(--space-lg);
+        }
+
+        /* التذييل */
+        footer {
+            text-align: center;
+            margin-top: var(--space-2xl);
+            padding: var(--space-xl) 0;
+            border-top: 1px solid var(--color-border);
+            color: var(--color-text-secondary);
+            font-size: 1rem;
+        }
+
+        /* التجاوب مع الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: var(--space-md);
+                flex-direction: column;
+                gap: var(--space-md);
+            }
+            
+            .navbar-nav {
+                gap: var(--space-md);
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .navbar-actions {
+                margin-top: var(--space-md);
+            }
+            
+            .timer-display {
+                font-size: 3.5rem;
+            }
+            
+            .timer-controls, .timer-modes, .challenge-buttons {
+                flex-direction: column;
+            }
+            
+            .btn, .timer-mode {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .container {
+                padding: var(--space-md);
+            }
+            
+            .card {
+                padding: var(--space-lg);
+            }
+        }
+
+        /* تأثيرات النقر */
+        .clickable {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .clickable:active {
+            transform: scale(0.97);
+        }
+
+        /* تعريفات الوضع الفاتح */
+        body.light-mode {
+            --color-primary-dark: #e2e8f0;
+            --color-primary-light: #ffffff;
+            --color-background: #f7fafc;
+            --color-text: #2d3748;
+            --color-text-secondary: #718096;
+            --color-border: #e2e8f0;
+        }
+
+        body.light-mode .navbar-logo {
+            border-color: #38b2ac;
+            filter: brightness(0.9);
+        }
+
+        body.light-mode .theme-toggle {
+            background-color: #edf2f7;
+            color: #4a5568;
+        }
+
+        body.light-mode .theme-toggle:hover {
+            background-color: #38b2ac;
+            color: white;
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <!-- شريط التنقل العلوي -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <img src="https://iili.io/KREI5cF.md.png" alt="شعار سومر" class="navbar-logo">
+            <div class="navbar-title">سومر</div>
+        </div>
+        
+        <div class="navbar-nav">
+            <a href="#" class="nav-link">الرئيسية</a>
+            <a href="#" class="nav-link">هذا الموقع</a>
+            <a href="#" class="nav-link">الموقع الآخر</a>
+        </div>
+        
+        <div class="navbar-actions">
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-sun"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- أزرار التنقل بين الصفحات -->
+        <div class="nav-tabs">
+            <button class="nav-tab active clickable" data-page="timer-page">
+                <i class="fas fa-clock"></i> المؤقت
+            </button>
+            <button class="nav-tab clickable" data-page="settings-page">
+                <i class="fas fa-cogs"></i> الإعدادات
+            </button>
+            <button class="nav-tab clickable" data-page="tasks-page">
+                <i class="fas fa-tasks"></i> المهام
+            </button>
+            <button class="nav-tab clickable" data-page="stats-page">
+                <i class="fas fa-chart-line"></i> الإحصائيات
+            </button>
+        </div>
+
+        <!-- صفحة المؤقت الرئيسية -->
+        <div id="timer-page" class="page active">
+            <div class="card">
+                <div class="timer-modes">
+                    <button class="timer-mode active clickable" data-mode="study">
+                        <i class="fas fa-book"></i> دراسة
+                    </button>
+                    <button class="timer-mode clickable" data-mode="shortBreak">
+                        <i class="fas fa-coffee"></i> استراحة قصيرة
+                    </button>
+                    <button class="timer-mode clickable" data-mode="longBreak">
+                        <i class="fas fa-couch"></i> استراحة طويلة
+                    </button>
+                </div>
+                
+                <div class="timer-display" id="timerDisplay">25:00</div>
+                
+                <div class="timer-progress">
+                    <div class="timer-progress-bar" id="timerProgressBar"></div>
+                </div>
+                
+                <div class="timer-controls">
+                    <button class="btn btn-primary clickable" id="startBtn">
+                        <i class="fas fa-play"></i> بدء
+                    </button>
+                    <button class="btn btn-secondary clickable" id="pauseBtn" disabled>
+                        <i class="fas fa-pause"></i> إيقاف
+                    </button>
+                    <button class="btn btn-secondary clickable" id="skipBtn">
+                        <i class="fas fa-forward"></i> تخطي
+                    </button>
+                </div>
+                
+                <div class="quote-container" id="quoteContainer">
+                    "النجاح هو مجموع الجهود الصغيرة المتكررة يومياً."
+                </div>
+            </div>
+        </div>
+
+        <!-- صفحة الإعدادات -->
+        <div id="settings-page" class="page">
+            <div class="card">
+                <h3 class="settings-title"><i class="fas fa-cog"></i> إعدادات المؤقت</h3>
+                <div class="setting-item">
+                    <label class="setting-label" for="studyTime">
+                        <i class="fas fa-book-open"></i> مدة الدراسة (دقائق)
+                    </label>
+                    <input type="number" class="setting-input" id="studyTime" min="1" max="60" value="25">
+                </div>
+                <div class="setting-item">
+                    <label class="setting-label" for="shortBreakTime">
+                        <i class="fas fa-coffee"></i> مدة الاستراحة القصيرة (دقائق)
+                    </label>
+                    <input type="number" class="setting-input" id="shortBreakTime" min="1" max="30" value="5">
+                </div>
+                <div class="setting-item">
+                    <label class="setting-label" for="longBreakTime">
+                        <i class="fas fa-couch"></i> مدة الاستراحة الطويلة (دقائق)
+                    </label>
+                    <input type="number" class="setting-input" id="longBreakTime" min="1" max="60" value="15">
+                </div>
+                <div class="setting-item">
+                    <label class="setting-label" for="sessionsBeforeLongBreak">
+                        <i class="fas fa-redo"></i> عدد الجلسات قبل الاستراحة الطويلة
+                    </label>
+                    <input type="number" class="setting-input" id="sessionsBeforeLongBreak" min="1" max="10" value="4">
+                </div>
+            </div>
+            
+            <div class="card focus-sounds">
+                <h3 class="settings-title"><i class="fas fa-volume-up"></i> أصوات التركيز</h3>
+                <p>اختر صوتاً خلفياً لمساعدتك على التركيز</p>
+                <div class="sound-buttons">
+                    <button class="sound-btn clickable" data-sound="rain">
+                        <i class="fas fa-cloud-rain"></i> مطر
+                    </button>
+                    <button class="sound-btn clickable" data-sound="waves">
+                        <i class="fas fa-water"></i> أمواج
+                    </button>
+                    <button class="sound-btn clickable" data-sound="white">
+                        <i class="fas fa-wind"></i> ضوضاء بيضاء
+                    </button>
+                    <button class="sound-btn active clickable" data-sound="none">
+                        <i class="fas fa-volume-mute"></i> إيقاف
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- صفحة المهام -->
+        <div id="tasks-page" class="page">
+            <div class="card">
+                <h3 class="settings-title"><i class="fas fa-tasks"></i> مهامي</h3>
+                <div class="todo-container">
+                    <div class="todo-form">
+                        <input type="text" class="todo-input" id="todoInput" placeholder="أضف مهمة جديدة...">
+                        <button class="todo-add clickable" id="todoAdd">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <ul class="todo-list" id="todoList">
+                        <!-- سيتم ملء المهام عبر JavaScript -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- صفحة الإحصائيات -->
+        <div id="stats-page" class="page">
+            <div class="card">
+                <h3 class="settings-title"><i class="fas fa-chart-line"></i> إحصائياتي</h3>
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-value" id="sessionsToday">0</div>
+                        <div class="stat-label">
+                            <i class="fas fa-calendar-day"></i> جلسات اليوم
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="currentStreak">0</div>
+                        <div class="stat-label">
+                            <i class="fas fa-fire"></i> السلسلة الحالية
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="bestStreak">0</div>
+                        <div class="stat-label">
+                            <i class="fas fa-trophy"></i> أفضل سلسلة
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalSessions">0</div>
+                        <div class="stat-label">
+                            <i class="fas fa-chart-pie"></i> إجمالي الجلسات
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="badges-container">
+                    <h3 class="settings-title"><i class="fas fa-medal"></i> شارات الإنجاز</h3>
+                    <div class="badges-grid" id="badgesGrid">
+                        <div class="badge locked clickable">
+                            <i class="fas fa-bullseye"></i>
+                            <div class="badge-tooltip">غير مكتمل</div>
+                        </div>
+                        <div class="badge locked clickable">
+                            <i class="fas fa-fire"></i>
+                            <div class="badge-tooltip">غير مكتمل</div>
+                        </div>
+                        <div class="badge locked clickable">
+                            <i class="fas fa-trophy"></i>
+                            <div class="badge-tooltip">غير مكتمل</div>
+                        </div>
+                        <div class="badge locked clickable">
+                            <i class="fas fa-star"></i>
+                            <div class="badge-tooltip">غير مكتمل</div>
+                        </div>
+                        <div class="badge locked clickable">
+                            <i class="fas fa-rocket"></i>
+                            <div class="badge-tooltip">غير مكتمل</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="challenge-container">
+                    <h3 class="settings-title"><i class="fas fa-users"></i> تحدّى صديقك</h3>
+                    <p>أنشئ رابط تحدٍ ومشاركته مع أصدقائك</p>
+                    <div class="challenge-buttons">
+                        <button class="btn btn-primary clickable" id="createChallenge">
+                            <i class="fas fa-link"></i> إنشاء تحدٍ
+                        </button>
+                        <button class="btn btn-secondary clickable" id="joinChallenge">
+                            <i class="fas fa-user-plus"></i> الانضمام لتحدٍ
+                        </button>
+                    </div>
+                    <div id="challengeLinkContainer" style="display: none; margin-top: 15px;">
+                        <input type="text" id="challengeLink" readonly class="setting-input">
+                        <button class="btn btn-primary clickable" id="copyChallenge" style="margin-top: 10px;">
+                            <i class="fas fa-copy"></i> نسخ الرابط
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 سومر - أداة البومودورو العربية لزيادة الإنتاجية</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // عناصر DOM
+            const themeToggle = document.getElementById('themeToggle');
+            const timerDisplay = document.getElementById('timerDisplay');
+            const progressBar = document.getElementById('timerProgressBar');
+            const startBtn = document.getElementById('startBtn');
+            const pauseBtn = document.getElementById('pauseBtn');
+            const skipBtn = document.getElementById('skipBtn');
+            const timerModes = document.querySelectorAll('.timer-mode');
+            const quoteContainer = document.getElementById('quoteContainer');
+            const studyTimeInput = document.getElementById('studyTime');
+            const shortBreakTimeInput = document.getElementById('shortBreakTime');
+            const longBreakTimeInput = document.getElementById('longBreakTime');
+            const sessionsInput = document.getElementById('sessionsBeforeLongBreak');
+            const todoInput = document.getElementById('todoInput');
+            const todoAdd = document.getElementById('todoAdd');
+            const todoList = document.getElementById('todoList');
+            const sessionsTodayEl = document.getElementById('sessionsToday');
+            const currentStreakEl = document.getElementById('currentStreak');
+            const bestStreakEl = document.getElementById('bestStreak');
+            const totalSessionsEl = document.getElementById('totalSessions');
+            const badgesGrid = document.getElementById('badgesGrid');
+            const createChallengeBtn = document.getElementById('createChallenge');
+            const joinChallengeBtn = document.getElementById('joinChallenge');
+            const challengeLinkContainer = document.getElementById('challengeLinkContainer');
+            const challengeLink = document.getElementById('challengeLink');
+            const copyChallengeBtn = document.getElementById('copyChallenge');
+            const soundButtons = document.querySelectorAll('.sound-btn');
+            const navTabs = document.querySelectorAll('.nav-tab');
+            const pages = document.querySelectorAll('.page');
+            const body = document.body;
+
+            // حالة التطبيق
+            let state = {
+                theme: 'dark',
+                mode: 'study',
+                running: false,
+                timeLeft: 25 * 60,
+                totalSeconds: 25 * 60,
+                sessionsCompleted: 0,
+                sessionsToday: 0,
+                currentStreak: 0,
+                bestStreak: 0,
+                totalSessions: 0,
+                lastSessionDate: null,
+                todos: [],
+                badges: {
+                    firstSession: false,
+                    fiveSessions: false,
+                    weekStreak: false,
+                    monthStreak: false,
+                    hundredSessions: false
+                },
+                currentSound: null,
+                challengeActive: false,
+                challengeCode: null,
+                lastUpdateTime: 0
+            };
+
+            // الاقتباسات التحفيزية
+            const quotes = [
+                "النجاح هو مجموع الجهود الصغيرة المتكررة يومياً.",
+                "لا تنتظر الظروف المثالية، فهي لن تأتي أبداً. استغل الظروف الحالية.",
+                "أفضل طريقة للتنبؤ بالمستقبل هي صنعه.",
+                "التركيز هو أساس النجاح في الحياة.",
+                "لا يوجد بديل للعمل الجاد.",
+                "الوقت هو المورد الوحيد الذي لا يمكنك استعادته، استخدمه بحكمة.",
+                "العقل الذي انفتح على فكرة جديدة لن يعود إلى حجمه السابق.",
+                "الاستمرارية هي مفتاح تحقيق الأحلام الكبيرة.",
+                "ابدأ من حيث أنت، استخدم ما لديك، افعل ما تستطيع.",
+                "التحديات هي ما تجعل الحياة مثيرة للاهتمام، والتغلب عليها هو ما يجعلها ذات معنى."
+            ];
+
+            // تهيئة التطبيق
+            function init() {
+                loadState();
+                updateThemeUI();
+                updateTimerDisplay();
+                updateProgressBar();
+                updateStats();
+                renderTodos();
+                renderBadges();
+                showRandomQuote();
+                checkStreak();
+                setupEventListeners();
+                
+                // بدء حلقة التحديث للمؤقت
+                requestAnimationFrame(updateTimer);
+            }
+
+            // إعداد مستمعي الأحداث
+            function setupEventListeners() {
+                themeToggle.addEventListener('click', toggleTheme);
+                
+                // التنقل بين الصفحات
+                navTabs.forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        const pageId = tab.dataset.page;
+                        
+                        // إخفاء جميع الصفحات
+                        pages.forEach(page => {
+                            page.classList.remove('active');
+                        });
+                        
+                        // إظهار الصفحة المحددة
+                        document.getElementById(pageId).classList.add('active');
+                        
+                        // تحديث حالة الأزرار
+                        navTabs.forEach(t => t.classList.remove('active'));
+                        tab.classList.add('active');
+                    });
+                });
+                
+                timerModes.forEach(mode => {
+                    mode.addEventListener('click', switchMode);
+                });
+                
+                startBtn.addEventListener('click', startTimer);
+                pauseBtn.addEventListener('click', pauseTimer);
+                skipBtn.addEventListener('click', skipTimer);
+                
+                studyTimeInput.addEventListener('change', updateSettings);
+                shortBreakTimeInput.addEventListener('change', updateSettings);
+                longBreakTimeInput.addEventListener('change', updateSettings);
+                sessionsInput.addEventListener('change', updateSettings);
+                
+                todoAdd.addEventListener('click', addTodo);
+                todoInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') addTodo();
+                });
+                
+                createChallengeBtn.addEventListener('click', createChallenge);
+                joinChallengeBtn.addEventListener('click', joinChallenge);
+                copyChallengeBtn.addEventListener('click', copyChallengeLink);
+                
+                soundButtons.forEach(btn => {
+                    btn.addEventListener('click', handleSoundButton);
+                });
+            }
+
+            // تحميل الحالة من localStorage
+            function loadState() {
+                const saved = localStorage.getItem('sumerState');
+                if (saved) {
+                    try {
+                        const parsed = JSON.parse(saved);
+                        state = {...state, ...parsed};
+                        
+                        // تحديث واجهة المستخدم بناءً على الحالة المحملة
+                        studyTimeInput.value = Math.floor(state.totalSeconds / 60);
+                        shortBreakTimeInput.value = parseInt(shortBreakTimeInput.value);
+                        longBreakTimeInput.value = parseInt(longBreakTimeInput.value);
+                        sessionsInput.value = parseInt(sessionsInput.value);
+                        
+                        // تحديث الوضع الحالي
+                        timerModes.forEach(mode => mode.classList.remove('active'));
+                        document.querySelector(`[data-mode="${state.mode}"]`).classList.add('active');
+                        
+                        // تحديث الوقت المتبقي
+                        updateTimerDisplay();
+                        updateProgressBar();
+                    } catch (e) {
+                        console.error('Error loading state:', e);
+                    }
+                }
+            }
+
+            // حفظ الحالة إلى localStorage
+            function saveState() {
+                localStorage.setItem('sumerState', JSON.stringify(state));
+            }
+
+            // تبديل الوضع الليلي/النهاري
+            function toggleTheme() {
+                state.theme = state.theme === 'dark' ? 'light' : 'dark';
+                updateThemeUI();
+                saveState();
+            }
+
+            function updateThemeUI() {
+                if (state.theme === 'dark') {
+                    body.classList.remove('light-mode');
+                    body.classList.add('dark-mode');
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                } else {
+                    body.classList.remove('dark-mode');
+                    body.classList.add('light-mode');
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                }
+            }
+
+            // تبديل أوضاع المؤقت
+            function switchMode(e) {
+                if (state.running) return;
+                
+                timerModes.forEach(m => m.classList.remove('active'));
+                e.target.classList.add('active');
+                
+                state.mode = e.target.dataset.mode;
+                updateTotalTime();
+                state.timeLeft = state.totalSeconds;
+                updateTimerDisplay();
+                updateProgressBar();
+                saveState();
+            }
+
+            function updateTotalTime() {
+                if (state.mode === 'study') {
+                    state.totalSeconds = parseInt(studyTimeInput.value) * 60;
+                } else if (state.mode === 'shortBreak') {
+                    state.totalSeconds = parseInt(shortBreakTimeInput.value) * 60;
+                } else {
+                    state.totalSeconds = parseInt(longBreakTimeInput.value) * 60;
+                }
+            }
+
+            function updateTimerDisplay() {
+                const minutes = Math.floor(state.timeLeft / 60);
+                const seconds = state.timeLeft % 60;
+                timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+
+            function updateProgressBar() {
+                const progress = ((state.totalSeconds - state.timeLeft) / state.totalSeconds) * 100;
+                progressBar.style.width = `${progress}%`;
+            }
+
+            function updateSettings() {
+                updateTotalTime();
+                if (!state.running) {
+                    state.timeLeft = state.totalSeconds;
+                    updateTimerDisplay();
+                    updateProgressBar();
+                }
+                saveState();
+            }
+
+            // حلقة التحديث الرئيسية للمؤقت (باستخدام requestAnimationFrame)
+            function updateTimer(timestamp) {
+                if (!state.lastUpdateTime) {
+                    state.lastUpdateTime = timestamp;
+                }
+                
+                const elapsed = timestamp - state.lastUpdateTime;
+                
+                if (state.running && elapsed >= 1000) {
+                    state.timeLeft--;
+                    state.lastUpdateTime = timestamp;
+                    
+                    updateTimerDisplay();
+                    updateProgressBar();
+                    
+                    if (state.timeLeft <= 0) {
+                        completeSession();
+                    }
+                }
+                
+                requestAnimationFrame(updateTimer);
+            }
+
+            // التحكم في المؤقت
+            function startTimer() {
+                if (state.running) return;
+                
+                state.running = true;
+                state.lastUpdateTime = 0;
+                startBtn.disabled = true;
+                pauseBtn.disabled = false;
+                
+                saveState();
+            }
+
+            function pauseTimer() {
+                if (!state.running) return;
+                
+                state.running = false;
+                startBtn.disabled = false;
+                pauseBtn.disabled = true;
+                
+                saveState();
+            }
+
+            function skipTimer() {
+                if (state.running) {
+                    state.running = false;
+                }
+                
+                completeSession();
+            }
+
+            function completeSession() {
+                if (state.mode === 'study') {
+                    state.sessionsCompleted++;
+                    state.sessionsToday++;
+                    state.totalSessions++;
+                    
+                    // تحديث السلسلة
+                    const today = new Date().toDateString();
+                    if (state.lastSessionDate !== today) {
+                        const yesterday = new Date();
+                        yesterday.setDate(yesterday.getDate() - 1);
+                        
+                        if (state.lastSessionDate === yesterday.toDateString()) {
+                            state.currentStreak++;
+                        } else if (state.lastSessionDate !== today) {
+                            state.currentStreak = 1;
+                        }
+                        
+                        state.lastSessionDate = today;
+                        
+                        if (state.currentStreak > state.bestStreak) {
+                            state.bestStreak = state.currentStreak;
+                        }
+                    }
+                    
+                    // التحقق من الشارات
+                    checkBadges();
+                    
+                    // إذا كانت الجلسة مكتملة، انتقل إلى الاستراحة
+                    if (state.sessionsCompleted % parseInt(sessionsInput.value) === 0) {
+                        state.mode = 'longBreak';
+                    } else {
+                        state.mode = 'shortBreak';
+                    }
+                } else {
+                    // إذا كانت الاستراحة مكتملة، انتقل إلى الدراسة
+                    state.mode = 'study';
+                }
+                
+                // تحديث الواجهة
+                timerModes.forEach(mode => mode.classList.remove('active'));
+                document.querySelector(`[data-mode="${state.mode}"]`).classList.add('active');
+                
+                updateTotalTime();
+                state.timeLeft = state.totalSeconds;
+                updateTimerDisplay();
+                updateProgressBar();
+                updateStats();
+                
+                // عرض اقتباس جديد قبل كل جلسة دراسة
+                if (state.mode === 'study') {
+                    showRandomQuote();
+                }
+                
+                startBtn.disabled = false;
+                pauseBtn.disabled = true;
+                
+                saveState();
+            }
+
+            // إدارة المهام
+            function addTodo() {
+                const text = todoInput.value.trim();
+                if (text) {
+                    state.todos.push({ text, completed: false });
+                    todoInput.value = '';
+                    renderTodos();
+                    saveState();
+                }
+            }
+
+            function renderTodos() {
+                todoList.innerHTML = '';
+                state.todos.forEach((todo, index) => {
+                    const li = document.createElement('li');
+                    li.className = 'todo-item';
+                    
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.className = 'todo-checkbox';
+                    checkbox.checked = todo.completed;
+                    checkbox.addEventListener('change', () => toggleTodo(index));
+                    
+                    const span = document.createElement('span');
+                    span.className = `todo-text ${todo.completed ? 'completed' : ''}`;
+                    span.textContent = todo.text;
+                    
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.className = 'todo-delete';
+                    deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
+                    deleteBtn.addEventListener('click', () => deleteTodo(index));
+                    
+                    li.appendChild(checkbox);
+                    li.appendChild(span);
+                    li.appendChild(deleteBtn);
+                    todoList.appendChild(li);
+                });
+            }
+
+            function toggleTodo(index) {
+                state.todos[index].completed = !state.todos[index].completed;
+                renderTodos();
+                saveState();
+            }
+
+            function deleteTodo(index) {
+                state.todos.splice(index, 1);
+                renderTodos();
+                saveState();
+            }
+
+            // عرض الإحصائيات
+            function updateStats() {
+                sessionsTodayEl.textContent = state.sessionsToday;
+                currentStreakEl.textContent = state.currentStreak;
+                bestStreakEl.textContent = state.bestStreak;
+                totalSessionsEl.textContent = state.totalSessions;
+            }
+
+            // التحقق من السلسلة اليومية
+            function checkStreak() {
+                const today = new Date().toDateString();
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                
+                if (state.lastSessionDate === yesterday.toDateString()) {
+                    // المستخدم لديه سلسلة نشطة
+                } else if (state.lastSessionDate !== today) {
+                    // كسر السلسلة
+                    state.currentStreak = 0;
+                    saveState();
+                    updateStats();
+                }
+            }
+
+            // إدارة الشارات
+            function checkBadges() {
+                // أول جلسة
+                if (state.totalSessions === 1 && !state.badges.firstSession) {
+                    state.badges.firstSession = true;
+                    showBadgeNotification('أول جلسة!', 'مبروك على إكمال أول جلسة دراسة!', '🎯');
+                }
+                
+                // 5 جلسات
+                if (state.totalSessions >= 5 && !state.badges.fiveSessions) {
+                    state.badges.fiveSessions = true;
+                    showBadgeNotification('5 جلسات!', 'واصل التقدم!', '🔥');
+                }
+                
+                // أسبوع من الجلسات
+                if (state.currentStreak >= 7 && !state.badges.weekStreak) {
+                    state.badges.weekStreak = true;
+                    showBadgeNotification('أسبوع من الجلسات!', 'أنت ملتزم بشكل رائع!', '🏆');
+                }
+                
+                // شهر من الجلسات
+                if (state.currentStreak >= 30 && !state.badges.monthStreak) {
+                    state.badges.monthStreak = true;
+                    showBadgeNotification('شهر من الجلسات!', 'إنجاز مذهل!', '⭐');
+                }
+                
+                // 100 جلسة
+                if (state.totalSessions >= 100 && !state.badges.hundredSessions) {
+                    state.badges.hundredSessions = true;
+                    showBadgeNotification('100 جلسة!', 'لقد وصلت إلى مستوى جديد!', '🚀');
+                }
+                
+                renderBadges();
+                saveState();
+            }
+
+            function renderBadges() {
+                badgesGrid.innerHTML = '';
+                
+                const badges = [
+                    { id: 'firstSession', icon: 'fa-bullseye', name: 'أول جلسة', desc: 'أكمل أول جلسة دراسة' },
+                    { id: 'fiveSessions', icon: 'fa-fire', name: '5 جلسات', desc: 'أكمل 5 جلسات دراسة' },
+                    { id: 'weekStreak', icon: 'fa-trophy', name: 'أسبوع متواصل', desc: 'حافظ على سلسلة لمدة أسبوع' },
+                    { id: 'monthStreak', icon: 'fa-star', name: 'شهر متواصل', desc: 'حافظ على سلسلة لمدة شهر' },
+                    { id: 'hundredSessions', icon: 'fa-rocket', name: '100 جلسة', desc: 'أكمل 100 جلسة دراسة' }
+                ];
+                
+                badges.forEach(badge => {
+                    const div = document.createElement('div');
+                    div.className = `badge ${state.badges[badge.id] ? '' : 'locked'} clickable`;
+                    div.innerHTML = `
+                        <i class="fas ${badge.icon}"></i>
+                        <div class="badge-tooltip">${state.badges[badge.id] ? badge.desc : 'غير مكتمل'}</div>
+                    `;
+                    badgesGrid.appendChild(div);
+                });
+            }
+
+            function showBadgeNotification(title, message, emoji) {
+                alert(`${emoji} ${title}: ${message}`);
+            }
+
+            // عرض اقتباس عشوائي
+            function showRandomQuote() {
+                const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+                quoteContainer.textContent = `"${randomQuote}"`;
+                quoteContainer.style.opacity = '0';
+                setTimeout(() => {
+                    quoteContainer.style.opacity = '1';
+                }, 100);
+            }
+
+            // تحدي الأصدقاء
+            function createChallenge() {
+                const challengeSettings = {
+                    studyTime: studyTimeInput.value,
+                    shortBreak: shortBreakTimeInput.value,
+                    longBreak: longBreakTimeInput.value,
+                    sessions: sessionsInput.value,
+                    timestamp: Date.now()
+                };
+                
+                state.challengeCode = btoa(JSON.stringify(challengeSettings));
+                state.challengeActive = true;
+                
+                const challengeUrl = `${window.location.origin}${window.location.pathname}?challenge=${state.challengeCode}`;
+                challengeLink.value = challengeUrl;
+                challengeLinkContainer.style.display = 'block';
+                
+                saveState();
+            }
+
+            function joinChallenge() {
+                const code = prompt('أدخل رمز التحدي الذي تلقيته:');
+                if (code) {
+                    try {
+                        const settings = JSON.parse(atob(code));
+                        studyTimeInput.value = settings.studyTime;
+                        shortBreakTimeInput.value = settings.shortBreak;
+                        longBreakTimeInput.value = settings.longBreak;
+                        sessionsInput.value = settings.sessions;
+                        
+                        alert('لقد تم تحديك! هل تستطيع التفوق؟');
+                        
+                        // تحديث المؤقت مع الإعدادات الجديدة
+                        updateTotalTime();
+                        state.timeLeft = state.totalSeconds;
+                        updateTimerDisplay();
+                        updateProgressBar();
+                        
+                        saveState();
+                    } catch (e) {
+                        alert('رمز التحدي غير صالح');
+                    }
+                }
+            }
+
+            function copyChallengeLink() {
+                challengeLink.select();
+                document.execCommand('copy');
+                alert('تم نسخ الرابط إلى الحافظة');
+            }
+
+            // إدارة الأصوات
+            function handleSoundButton(e) {
+                const sound = e.target.dataset.sound;
+                
+                soundButtons.forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                
+                // هنا يمكن إضافة تشغيل الأصوات حسب النوع
+                alert(`تم اختيار صوت: ${sound}`);
+            }
+
+            // بدء التطبيق
+            init();
+        });
+    </script>
+</body>
+</html>
