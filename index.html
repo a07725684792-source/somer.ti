@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#1e2a38">
+    <meta name="theme-color" content="#e2e8f0">
     <meta name="description" content="أداة بومودورو عربية لزيادة الإنتاجية والتركيز">
     <title>سومر - أداة البومودورو العربية</title>
 
@@ -18,14 +18,14 @@
         /* متغيرات التصميم الموحدة */
         :root {
             /* الألوان الرئيسية */
-            --color-primary-dark: #1e2a38;
-            --color-primary-light: #2a3a4d;
+            --color-primary-dark: #e2e8f0;
+            --color-primary-light: #ffffff;
             --color-accent: #4fd1c5;
             --color-white: #ffffff;
-            --color-text: #e2e8f0;
-            --color-text-secondary: #a0aec0;
-            --color-border: #2d3748;
-            --color-background: #1e2a38;
+            --color-text: #2d3748;
+            --color-text-secondary: #718096;
+            --color-border: #e2e8f0;
+            --color-background: #f7fafc;
             
             /* تأثيرات الظل */
             --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
@@ -100,7 +100,7 @@
         .navbar-title {
             font-size: 1.8rem;
             font-weight: 700;
-            color: var(--color-white);
+            color: var(--color-text);
             transition: color 0.3s;
         }
 
@@ -154,8 +154,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: var(--color-primary-light);
-            color: var(--color-text);
+            background-color: #edf2f7;
+            color: #4a5568;
             transition: all 0.3s;
             box-shadow: var(--shadow-sm);
             position: absolute;
@@ -165,7 +165,7 @@
 
         .theme-toggle:hover {
             background-color: var(--color-accent);
-            color: var(--color-primary-dark);
+            color: white;
             transform: rotate(15deg);
         }
 
@@ -250,7 +250,7 @@
             font-variant-numeric: tabular-nums;
             color: var(--color-accent);
             margin: var(--space-xl) 0;
-            text-shadow: 0 0 15px rgba(79, 209, 197, 0.5);
+            text-shadow: 0 0 15px rgba(79, 209, 197, 0.3);
             text-align: center;
             transition: color 0.3s;
         }
@@ -402,7 +402,7 @@
         .settings-title {
             font-size: 1.5rem;
             margin-bottom: var(--space-lg);
-            color: var(--color-white);
+            color: var(--color-text);
             display: flex;
             align-items: center;
             gap: var(--space-md);
@@ -634,6 +634,30 @@
             font-size: 1rem;
         }
 
+        /* عداد المستخدمين */
+        .user-counter {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: var(--color-accent);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 30px;
+            font-weight: bold;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 1000;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
         /* التجاوب مع الشاشات الصغيرة */
         @media (max-width: 768px) {
             .navbar {
@@ -679,6 +703,42 @@
                 top: 0;
                 margin-bottom: var(--space-md);
             }
+            
+            .user-counter {
+                bottom: 10px;
+                left: 10px;
+                right: 10px;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .timer-display {
+                font-size: 2.8rem;
+            }
+            
+            .navbar-logo {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .navbar-title {
+                font-size: 1.5rem;
+            }
+            
+            .stats-container {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .badges-grid {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            }
+            
+            .badge {
+                width: 80px;
+                height: 80px;
+                font-size: 2rem;
+            }
         }
 
         /* تأثيرات النقر */
@@ -690,36 +750,126 @@
             transform: scale(0.97);
         }
 
-        /* تعريفات الوضع الفاتح */
-        body.light-mode {
-            --color-primary-dark: #e2e8f0;
-            --color-primary-light: #ffffff;
-            --color-background: #f7fafc;
-            --color-text: #2d3748;
-            --color-text-secondary: #718096;
-            --color-border: #e2e8f0;
+        /* رسائل الإشعارات */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--color-primary-light);
+            color: var(--color-text);
+            padding: var(--space-md) var(--space-lg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            z-index: 10000;
+            transform: translateX(100%);
+            opacity: 0;
+            transition: transform 0.3s, opacity 0.3s;
+            max-width: 350px;
+            border: 1px solid var(--color-border);
         }
 
-        body.light-mode .navbar-logo {
-            border-color: #38b2ac;
-            filter: brightness(0.9);
+        .notification.show {
+            transform: translateX(0);
+            opacity: 1;
         }
 
-        body.light-mode .theme-toggle {
-            background-color: #edf2f7;
-            color: #4a5568;
+        .notification-icon {
+            font-size: 1.5rem;
+            color: var(--color-accent);
         }
 
-        body.light-mode .theme-toggle:hover {
-            background-color: #38b2ac;
-            color: white;
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: bold;
+            margin-bottom: var(--space-xs);
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        /* إعدادات الصوت المتقدمة */
+        .custom-sound-container {
+            margin-top: var(--space-lg);
+            padding-top: var(--space-lg);
+            border-top: 1px solid var(--color-border);
+        }
+
+        .custom-sound-form {
+            display: flex;
+            margin-top: var(--space-md);
+        }
+
+        .custom-sound-input {
+            flex: 1;
+            padding: var(--space-md);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md) 0 0 var(--radius-md);
+            background-color: var(--color-primary-dark);
+            color: var(--color-text);
+            font-size: 1rem;
+        }
+
+        .custom-sound-add {
+            padding: var(--space-md) var(--space-lg);
+            border: none;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            background-color: var(--color-accent);
+            color: var(--color-primary-dark);
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* عناصر تحكم الصوت */
+        .audio-controls {
+            margin-top: var(--space-md);
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .volume-slider {
+            flex: 1;
+            -webkit-appearance: none;
+            height: 8px;
+            border-radius: var(--radius-lg);
+            background: var(--color-border);
+            outline: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--color-accent);
+            cursor: pointer;
+        }
+
+        .volume-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--color-accent);
+            cursor: pointer;
         }
     </style>
 </head>
-<body class="dark-mode">
+<body class="light-mode">
     <!-- زر تبديل الوضع الليلي/النهاري في أعلى يسار الصفحة -->
     <button class="theme-toggle" id="themeToggle">
-        <i class="fas fa-sun"></i>
+        <i class="fas fa-moon"></i>
     </button>
 
     <!-- شريط التنقل العلوي -->
@@ -727,6 +877,10 @@
         <div class="navbar-brand">
             <img src="https://iili.io/KREI5cF.md.png" alt="شعار سومر" class="navbar-logo">
             <div class="navbar-title">سومر</div>
+        </div>
+        <div class="user-counter" style="position: relative; bottom: auto; left: auto; animation: none;">
+            <i class="fas fa-users"></i>
+            <span id="userCount">0</span> مستخدم نشط
         </div>
     </nav>
 
@@ -775,8 +929,8 @@
                     <button class="btn btn-secondary clickable" id="pauseBtn" disabled>
                         <i class="fas fa-pause"></i> إيقاف
                     </button>
-                    <button class="btn btn-secondary clickable" id="skipBtn">
-                        <i class="fas fa-forward"></i> تخطي
+                    <button class="btn btn-secondary clickable" id="restartBtn">
+                        <i class="fas fa-redo"></i> إعادة
                     </button>
                 </div>
                 
@@ -832,6 +986,23 @@
                     <button class="sound-btn active clickable" data-sound="none">
                         <i class="fas fa-volume-mute"></i> إيقاف
                     </button>
+                </div>
+
+                <div class="audio-controls">
+                    <i class="fas fa-volume-up"></i>
+                    <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="50">
+                    <span id="volumeValue">50%</span>
+                </div>
+
+                <div class="custom-sound-container">
+                    <h4 class="setting-label"><i class="fas fa-link"></i> إضافة صوت مخصص</h4>
+                    <p>أدخل رابطاً لملف صوتي (MP3, WAV, OGG)</p>
+                    <div class="custom-sound-form">
+                        <input type="url" class="custom-sound-input" id="customSoundInput" placeholder="https://example.com/sound.mp3">
+                        <button class="custom-sound-add clickable" id="customSoundAdd">
+                            <i class="fas fa-plus"></i> إضافة
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -939,6 +1110,12 @@
         </footer>
     </div>
 
+    <!-- منطقة الإشعارات -->
+    <div id="notifications-container"></div>
+
+    <!-- عنصر الصوت المخفي -->
+    <audio id="background-audio" loop></audio>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // عناصر DOM
@@ -947,7 +1124,7 @@
             const progressBar = document.getElementById('timerProgressBar');
             const startBtn = document.getElementById('startBtn');
             const pauseBtn = document.getElementById('pauseBtn');
-            const skipBtn = document.getElementById('skipBtn');
+            const restartBtn = document.getElementById('restartBtn');
             const timerModes = document.querySelectorAll('.timer-mode');
             const quoteContainer = document.getElementById('quoteContainer');
             const studyTimeInput = document.getElementById('studyTime');
@@ -971,10 +1148,17 @@
             const navTabs = document.querySelectorAll('.nav-tab');
             const pages = document.querySelectorAll('.page');
             const body = document.body;
+            const userCountEl = document.getElementById('userCount');
+            const volumeSlider = document.getElementById('volumeSlider');
+            const volumeValue = document.getElementById('volumeValue');
+            const customSoundInput = document.getElementById('customSoundInput');
+            const customSoundAdd = document.getElementById('customSoundAdd');
+            const backgroundAudio = document.getElementById('background-audio');
+            const notificationsContainer = document.getElementById('notifications-container');
 
             // حالة التطبيق
             let state = {
-                theme: 'dark',
+                theme: 'light',
                 mode: 'study',
                 running: false,
                 timeLeft: 25 * 60,
@@ -996,7 +1180,9 @@
                 currentSound: null,
                 challengeActive: false,
                 challengeCode: null,
-                lastUpdateTime: 0
+                lastUpdateTime: 0,
+                volume: 50,
+                customSounds: []
             };
 
             // الاقتباسات التحفيزية
@@ -1025,6 +1211,8 @@
                 showRandomQuote();
                 checkStreak();
                 setupEventListeners();
+                updateUserCount();
+                updateVolume();
                 
                 // بدء حلقة التحديث للمؤقت
                 requestAnimationFrame(updateTimer);
@@ -1059,7 +1247,7 @@
                 
                 startBtn.addEventListener('click', startTimer);
                 pauseBtn.addEventListener('click', pauseTimer);
-                skipBtn.addEventListener('click', skipTimer);
+                restartBtn.addEventListener('click', restartTimer);
                 
                 studyTimeInput.addEventListener('change', updateSettings);
                 shortBreakTimeInput.addEventListener('change', updateSettings);
@@ -1078,6 +1266,9 @@
                 soundButtons.forEach(btn => {
                     btn.addEventListener('click', handleSoundButton);
                 });
+                
+                volumeSlider.addEventListener('input', updateVolume);
+                customSoundAdd.addEventListener('click', addCustomSound);
             }
 
             // تحميل الحالة من localStorage
@@ -1093,6 +1284,8 @@
                         shortBreakTimeInput.value = parseInt(shortBreakTimeInput.value);
                         longBreakTimeInput.value = parseInt(longBreakTimeInput.value);
                         sessionsInput.value = parseInt(sessionsInput.value);
+                        volumeSlider.value = state.volume;
+                        volumeValue.textContent = `${state.volume}%`;
                         
                         // تحديث الوضع الحالي
                         timerModes.forEach(mode => mode.classList.remove('active'));
@@ -1112,23 +1305,29 @@
                 localStorage.setItem('sumerState', JSON.stringify(state));
             }
 
+            // تحديث عدد المستخدمين (محاكاة واقعية)
+            function updateUserCount() {
+                // محاكاة عدد المستخدمين النشطين حالياً
+                const baseUsers = 42;
+                const randomUsers = Math.floor(Math.random() * 10);
+                const totalUsers = baseUsers + randomUsers;
+                
+                userCountEl.textContent = totalUsers.toLocaleString('ar-EG');
+                
+                // تحديث العدد كل دقيقة لمحاكاة التغير
+                setTimeout(updateUserCount, 60000);
+            }
+
             // تبديل الوضع الليلي/النهاري
             function toggleTheme() {
-                state.theme = state.theme === 'dark' ? 'light' : 'dark';
-                updateThemeUI();
-                saveState();
+                // تم إزالة هذه الميزة بناءً على الطلب
+                // ولكن تم الاحتفاظ بالزر لأغراض التصميم فقط
+                showNotification('معلومة', 'الوضع الفاتح فقط متاح حالياً', 'info');
             }
 
             function updateThemeUI() {
-                if (state.theme === 'dark') {
-                    body.classList.remove('light-mode');
-                    body.classList.add('dark-mode');
-                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-                } else {
-                    body.classList.remove('dark-mode');
-                    body.classList.add('light-mode');
-                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-                }
+                // تم إزالة هذه الميزة بناءً على الطلب
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
             }
 
             // تبديل أوضاع المؤقت
@@ -1222,12 +1421,19 @@
                 saveState();
             }
 
-            function skipTimer() {
-                if (state.running) {
-                    state.running = false;
-                }
+            function restartTimer() {
+                state.running = false;
+                startBtn.disabled = false;
+                pauseBtn.disabled = true;
                 
-                completeSession();
+                updateTotalTime();
+                state.timeLeft = state.totalSeconds;
+                updateTimerDisplay();
+                updateProgressBar();
+                
+                showNotification('إعادة الضبط', 'تم إعادة ضبط المؤقت بنجاح', 'info');
+                
+                saveState();
             }
 
             function completeSession() {
@@ -1257,6 +1463,9 @@
                     
                     // التحقق من الشارات
                     checkBadges();
+                    
+                    // عرض رسالة الإنجاز
+                    showNotification('تهانينا!', 'لقد أكملت جلسة الدراسة بنجاح وحصلت على إنجاز جديد', 'success');
                     
                     // إذا كانت الجلسة مكتملة، انتقل إلى الاستراحة
                     if (state.sessionsCompleted % parseInt(sessionsInput.value) === 0) {
@@ -1424,7 +1633,7 @@
             }
 
             function showBadgeNotification(title, message, emoji) {
-                alert(`${emoji} ${title}: ${message}`);
+                showNotification(title, `${emoji} ${message}`, 'success');
             }
 
             // عرض اقتباس عشوائي
@@ -1467,7 +1676,7 @@
                         longBreakTimeInput.value = settings.longBreak;
                         sessionsInput.value = settings.sessions;
                         
-                        alert('لقد تم تحديك! هل تستطيع التفوق؟');
+                        showNotification('تم قبول التحدي!', 'لقد تم تحديك! هل تستطيع التفوق؟', 'info');
                         
                         // تحديث المؤقت مع الإعدادات الجديدة
                         updateTotalTime();
@@ -1477,7 +1686,7 @@
                         
                         saveState();
                     } catch (e) {
-                        alert('رمز التحدي غير صالح');
+                        showNotification('خطأ', 'رمز التحدي غير صالح', 'error');
                     }
                 }
             }
@@ -1485,7 +1694,7 @@
             function copyChallengeLink() {
                 challengeLink.select();
                 document.execCommand('copy');
-                alert('تم نسخ الرابط إلى الحافظة');
+                showNotification('تم النسخ', 'تم نسخ الرابط إلى الحافظة', 'success');
             }
 
             // إدارة الأصوات
@@ -1495,8 +1704,133 @@
                 soundButtons.forEach(b => b.classList.remove('active'));
                 e.target.classList.add('active');
                 
-                // هنا يمكن إضافة تشغيل الأصوات حسب النوع
-                alert(`تم اختيار صوت: ${sound}`);
+                // إيقاف أي صوت قيد التشغيل
+                backgroundAudio.pause();
+                backgroundAudio.currentTime = 0;
+                
+                // تشغيل الصوت المحدد
+                if (sound !== 'none') {
+                    state.currentSound = sound;
+                    
+                    // تعيين مصدر الصوت بناءً على الاختيار
+                    let soundSource = '';
+                    switch(sound) {
+                        case 'rain':
+                            soundSource = 'https://assets.mixkit.co/sfx/preview/mixkit-rain-01-196.mp3';
+                            break;
+                        case 'waves':
+                            soundSource = 'https://assets.mixkit.co/sfx/preview/mixkit-waves-ambience-1183.mp3';
+                            break;
+                        case 'white':
+                            soundSource = 'https://assets.mixkit.co/sfx/preview/mixkit-ambient-white-noise-996.mp3';
+                            break;
+                    }
+                    
+                    backgroundAudio.src = soundSource;
+                    backgroundAudio.volume = state.volume / 100;
+                    backgroundAudio.play().catch(e => {
+                        console.error('Error playing sound:', e);
+                    });
+                } else {
+                    state.currentSound = null;
+                }
+                
+                saveState();
+            }
+
+            function updateVolume() {
+                state.volume = volumeSlider.value;
+                volumeValue.textContent = `${state.volume}%`;
+                backgroundAudio.volume = state.volume / 100;
+                saveState();
+            }
+
+            function addCustomSound() {
+                const url = customSoundInput.value.trim();
+                if (url) {
+                    // التحقق من أن الرابط يحتوي على امتداد صوتي
+                    const audioExtensions = ['.mp3', '.wav', '.ogg', '.m4a'];
+                    const hasAudioExtension = audioExtensions.some(ext => url.toLowerCase().includes(ext));
+                    
+                    if (hasAudioExtension) {
+                        state.customSounds.push(url);
+                        customSoundInput.value = '';
+                        
+                        // إنشاء زر للصوت المخصص
+                        const soundBtn = document.createElement('button');
+                        soundBtn.className = 'sound-btn clickable';
+                        soundBtn.dataset.sound = `custom-${state.customSounds.length - 1}`;
+                        soundBtn.innerHTML = `<i class="fas fa-music"></i> صوت مخصص ${state.customSounds.length}`;
+                        
+                        soundBtn.addEventListener('click', function() {
+                            soundButtons.forEach(b => b.classList.remove('active'));
+                            this.classList.add('active');
+                            
+                            backgroundAudio.pause();
+                            backgroundAudio.currentTime = 0;
+                            backgroundAudio.src = url;
+                            backgroundAudio.volume = state.volume / 100;
+                            backgroundAudio.play().catch(e => {
+                                console.error('Error playing custom sound:', e);
+                            });
+                            
+                            state.currentSound = `custom-${state.customSounds.length - 1}`;
+                            saveState();
+                        });
+                        
+                        document.querySelector('.sound-buttons').appendChild(soundBtn);
+                        saveState();
+                        
+                        showNotification('تم الإضافة', 'تمت إضافة الصوت المخصص بنجاح', 'success');
+                    } else {
+                        showNotification('خطأ', 'الرابط يجب أن يشير إلى ملف صوتي (mp3, wav, ogg, m4a)', 'error');
+                    }
+                }
+            }
+
+            // نظام الإشعارات
+            function showNotification(title, message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                
+                let icon = 'fa-info-circle';
+                if (type === 'success') icon = 'fa-check-circle';
+                if (type === 'error') icon = 'fa-exclamation-circle';
+                
+                notification.innerHTML = `
+                    <div class="notification-icon"><i class="fas ${icon}"></i></div>
+                    <div class="notification-content">
+                        <div class="notification-title">${title}</div>
+                        <div class="notification-message">${message}</div>
+                    </div>
+                    <button class="notification-close"><i class="fas fa-times"></i></button>
+                `;
+                
+                notificationsContainer.appendChild(notification);
+                
+                // إظهار الإشعار
+                setTimeout(() => {
+                    notification.classList.add('show');
+                }, 10);
+                
+                // إغلاق الإشعار تلقائياً بعد 5 ثوان
+                setTimeout(() => {
+                    closeNotification(notification);
+                }, 5000);
+                
+                // إغلاق الإشعار عند النقر على الزر
+                notification.querySelector('.notification-close').addEventListener('click', () => {
+                    closeNotification(notification);
+                });
+            }
+            
+            function closeNotification(notification) {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
             }
 
             // بدء التطبيق
